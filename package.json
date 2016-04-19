@@ -1,6 +1,6 @@
 {
   "name": "js-fpga",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Build, evolve, and utilize virtual FPGA's.",
   "main": "fpga.js",
   "scripts": {
