@@ -12,6 +12,12 @@ module.exports = function(grunt) {
         dest: 'public/js/fpga.js'
       }
     },
+    copy: {
+      dist: {
+        src: 'index.html',
+        dest: 'public/'
+      }
+    },
     express: {
       options: {
         script: 'index.js'
@@ -46,8 +52,13 @@ module.exports = function(grunt) {
           sourceMap: true
         },
         files: {
-          'public/css/main.css': 'styles/sass/main.scss'
+          'public/styles/css/main.css': 'styles/sass/main.scss'
         }
+      }
+    },
+    simplemocha: {
+      all: {
+        src: ['**/*.spec.js']
       }
     },
     watch: {
@@ -82,12 +93,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
   grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-simple-mocha');
 
   grunt.registerTask('no-default', function () {
     console.log('Default tasks are for the bad kind of lazy programmer. For shame!')
   });
 
   grunt.registerTask('default', ['no-default']);
-  grunt.registerTask('dev', ['express:dev', 'sass:dev', 'jshint', 'watch']);
+  grunt.registerTask('dev', ['express:dev', 'sass:dev', 'jshint', 'simplemocha', 'watch']);
   grunt.registerTask('dist', ['express:dist', 'clean', 'sass:dist', 'concat:dist', 'copy:dist']);
 };

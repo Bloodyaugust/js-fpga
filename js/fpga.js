@@ -4,7 +4,7 @@
 
     me.tag = 'gate';
     me.type = config.type;
-    me.sources = [];
+    me.sources = config.sources || [];
     me.circuit = config.circuit;
     me.circuitIndex = config.circuitIndex;
 
@@ -39,6 +39,8 @@
           me.out = 0;
           break;
       }
+
+      return me.out;
     };
 
     me.clone = function() {
