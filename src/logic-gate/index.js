@@ -1,17 +1,15 @@
 class LogicGate {
 
   constructor (config) {
-    this.tag = 'gate';
-    this.type = config.type;
-    this.sources = config.sources || [];
-    this.circuit = config.circuit;
     this.circuitIndex = config.circuitIndex;
     this.out = 0;
+    this.sources = [];
+    this.type = config.type;
   }
 
   resolve () {
-    var a = this.sources[0].tag === 'gate' ? this.sources[0].out : this.circuit.input[this.sources[0]],
-      b = this.sources[1].tag === 'gate' ? this.sources[1].out : this.circuit.input[this.sources[1]];
+    var a = this.sources[0] ? this.sources[0].out : 0,
+      b = this.sources[1] ? this.sources[1].out : 0;
 
     switch (this.type) {
       case 'AND':
@@ -32,7 +30,10 @@ class LogicGate {
       case 'XOR':
         this.out = ((a || b) && !(a && b)) ? 1 : 0;
         break;
-      default:
+      case 'ON':
+        this.out = 1;
+        break;
+      case 'OFF':
         this.out = 0;
         break;
     }
@@ -42,13 +43,14 @@ class LogicGate {
 
   clone () {
     return {
-      tag: 'gate',
       type: this.type,
-      sources: [],
-      circuit: {},
-      circuitIndex: this.circuitIndex,
+      sources: [(this.sources[0] ? this.sources[0].circuitIndex : null), (this.sources[1] ? this.sources[1].circuitIndex : null)],
       out: 0
     };
+  }
+
+  getGenome () {
+    return this.type + '.' + (this.sources[0] ? this.sources[0].circuitIndex : 'null') + '.' + (this.sources[1] ? this.sources[1].circuitIndex : 'null');
   }
 }
 

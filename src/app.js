@@ -1,9 +1,5 @@
 import {logicTools} from './logic-tools/';
 
-var testCircuit = logicTools.seedCircuit({
-  inputs: 12,
-  outputs: 2,
-  genomeLength: 48
-});
+window.testCircuit = logicTools.seedCircuit(10000);
 
 console.log(testCircuit);

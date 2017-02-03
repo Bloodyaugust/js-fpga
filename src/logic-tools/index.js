@@ -1,3 +1,4 @@
+import Constants from '../constants';
 import LogicCircuit from '../logic-circuit';
 
 class LogicTools {
@@ -6,66 +7,19 @@ class LogicTools {
 
   }
 
-  seedCircuit (config) {
-    var inputs = config.inputs,
-      outputs = config.outputs,
-      genomeLength = config.genomeLength,
-      genome = '',
-      usedOutputs = {},
-      validGateFound = false,
-      rnd, circuit;
+  seedCircuit (numGates) {
+    let genome = '';
 
-    for (let i = 0; i < genomeLength; i++) {
-      genome += Math.floor(Math.random() * 6);
-    }
+    for (let i = 0; i < numGates; i++) {
+      genome += Constants.GATE_TYPES[Math.floor(Math.random() * Constants.GATE_TYPES.length)];
+      genome += '.' + Math.floor(Math.random() * numGates) + '.' + Math.floor(Math.random() * numGates);
 
-    circuit = new LogicCircuit(genome);
-
-    for (let i = 0; i < inputs; i++) {
-      while (!validGateFound) {
-        rnd = Math.floor(Math.random() * genomeLength);
-
-        if (!circuit.gates[rnd].sources[0]) {
-          circuit.gates[rnd].sources[0] = i;
-          validGateFound = true;
-        }
-      }
-      validGateFound = false;
-
-      circuit.input.push(0);
-    }
-
-    for (let i = 0; i < outputs; i++) {
-      while (!validGateFound) {
-        rnd = Math.floor(Math.random() * genomeLength);
-
-        if (!usedOutputs[rnd]) {
-          circuit.addOutput(rnd);
-          usedOutputs[rnd] = true;
-          validGateFound = true;
-        }
-      }
-      validGateFound = false;
-    }
-
-    for (let i = 0; i < genomeLength; i++) {
-      while (!circuit.gates[i].sources[0]) {
-        rnd = Math.floor(Math.random() * genomeLength);
-
-        if (rnd !== i) {
-          circuit.gates[i].sources[0] = circuit.gates[rnd];
-        }
-      }
-      while (!circuit.gates[i].sources[1]) {
-        rnd = Math.floor(Math.random() * genomeLength);
-
-        if (rnd !== i) {
-          circuit.gates[i].sources[1] = circuit.gates[rnd];
-        }
+      if (i !== numGates - 1) {
+        genome += '-';
       }
     }
 
-    return circuit;
+    return new LogicCircuit(genome);
   }
 }
 

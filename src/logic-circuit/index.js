@@ -5,84 +5,45 @@ class LogicCircuit {
   constructor (genome) {
     this.genome = genome;
     this.gates = [];
-    this.gateTypes = [
-      'AND',
-      'OR',
-      'NOT',
-      'NAND',
-      'NOR',
-      'XOR'
-    ];
-    this.input = [];
-    this.outputs = [];
 
-    for (var i = 0; i < this.genome.length; i++) {
+    let gateGenomes = genome.split('-');
+
+    for (let i = 0; i < gateGenomes.length; i++) {
+      let genes = gateGenomes[i].split('.');
+
       this.gates.push(
         new LogicGate({
-          type: this.gateTypes[parseInt(this.genome[i])],
+          type: genes[0],
           circuit: this,
           circuitIndex: i
         })
       );
     }
-  }
 
-  addOutput (index) {
-    this.outputs.push(this.gates[index]);
-  }
+    for (let i = 0; i < gateGenomes.length; i++) {
+      let genes = gateGenomes[i].split('.');
 
-  setOutputs (indices) {
-    this.outputs = [];
-    for (var i = 0; i < indices.length; i++) {
-      this.outputs.push(this.gates[indices[i]]);
+      this.gates[i].sources[0] = parseInt(genes[1]) ? this.gates[parseInt(genes[1])] : null;
+      this.gates[i].sources[1] = parseInt(genes[2]) ? this.gates[parseInt(genes[2])] : null;
     }
   }
 
-  resolve (input) {
+  resolve (input, outputLength) {
     var output = [];
 
-    this.input = input ? input : this.input;
+    for (let i = 0; i < input.length; i++) {
+      this.gates[i].type = input[i] === 1 ? 'ON' : 'OFF';
+    }
 
     for (let i = 0; i < this.gates.length; i++) {
       this.gates[i].resolve();
     }
 
-    for (let i = 0; i < this.outputs.length; i++) {
-      output.push(this.outputs[i].out);
+    for (let i = this.gates.length - outputLength; i < this.gates.length; i++) {
+      output.push(this.gates[i].out);
     }
 
     return output;
-  }
-
-  clone () {
-    var clone = {
-      genome: this.genome,
-      gates: [],
-      gateTypes: this.gateTypes,
-      input: [],
-      outputs: []
-    };
-
-    for (var i = 0; i < this.gates.length; i++) {
-      clone.gates.push(this.gates[i].clone());
-    }
-
-    for (i = 0; i < clone.gates.length; i++) {
-      clone.gates[i].circuit = clone;
-
-      clone.gates[i].sources[0] = this.gates[i].sources[0].tag === 'gate' ?
-        clone.gates[this.gates[i].sources[0].circuitIndex] :
-        this.gates[i].sources[0];
-      clone.gates[i].sources[1] = this.gates[i].sources[1].tag === 'gate' ?
-        clone.gates[this.gates[i].sources[1].circuitIndex] :
-        this.gates[i].sources[1];
-    }
-
-    for (i = 0; i < this.outputs.length; i++) {
-      clone.outputs.push(clone.gates[this.outputs[i].circuitIndex]);
-    }
-
-    return clone;
   }
 }
 
