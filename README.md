@@ -9,4 +9,4 @@ To use, you'll need to:
 
 `npm run build` runs webpack as a one-off
 
-Navigate to http://localhost:9000/src/ to see the test page.
+Navigate to [localhost](http://localhost:9000/src/) to see the test page.
