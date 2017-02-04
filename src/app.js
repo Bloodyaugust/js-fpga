@@ -1,5 +1,9 @@
-import {logicTools} from './logic-tools/';
+import LogicSolutionTrainer from './logic-solution-trainer';
 
-window.testCircuit = logicTools.seedCircuit(10000);
+var testTrainer = new LogicSolutionTrainer({
+  circuitSize: 96,
+  immigrantsPerGeneration: 5,
+  population: 15
+});
 
-console.log(testCircuit);
+testTrainer.evolve([0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0])

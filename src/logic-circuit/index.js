@@ -3,6 +3,7 @@ import LogicGate from '../logic-gate/';
 class LogicCircuit {
 
   constructor (genome) {
+    this.fitness = 1;
     this.genome = genome;
     this.gates = [];
 
@@ -23,8 +24,8 @@ class LogicCircuit {
     for (let i = 0; i < gateGenomes.length; i++) {
       let genes = gateGenomes[i].split('.');
 
-      this.gates[i].sources[0] = parseInt(genes[1]) ? this.gates[parseInt(genes[1])] : null;
-      this.gates[i].sources[1] = parseInt(genes[2]) ? this.gates[parseInt(genes[2])] : null;
+      this.gates[i].sources[0] = !isNaN(parseInt(genes[1])) ? this.gates[parseInt(genes[1])] : null;
+      this.gates[i].sources[1] = !isNaN(parseInt(genes[2])) ? this.gates[parseInt(genes[2])] : null;
     }
   }
 
