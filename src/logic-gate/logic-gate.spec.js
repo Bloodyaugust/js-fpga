@@ -1,26 +1,25 @@
-var chai = require('chai');
-var fpga = require('./js/fpga');
+import chai from 'chai';
+import LogicGate from './';
 
 describe('#LogicGate', function () {
-  var testGate = {},
-    source = [];
+  let testGate = {};
+  let source = [];
 
   beforeEach(function () {
     source = [
       {
-        out: 0,
-        tag: 'gate'
+        out: 0
       },
       {
-        out: 1,
-        tag: 'gate'
+        out: 1
       }
     ];
 
-    testGate = new fpga.LogicGate({
-      type: 'AND',
-      sources: source
+    testGate = new LogicGate({
+      type: 'AND'
     });
+
+    testGate.sources = source;
   });
 
   it('AND Gate', function () {

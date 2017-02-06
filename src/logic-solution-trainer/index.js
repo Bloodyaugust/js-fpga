@@ -18,9 +18,7 @@ class LogicSolutionTrainer {
     }
 
     if (!this.callback) {
-      this.callback = (winningCircuit) => {
-        console.log(winningCircuit.genome);
-      }
+      this.callback = () => {};
     }
   }
 
@@ -35,8 +33,6 @@ class LogicSolutionTrainer {
     if (this.circuits[0].fitness === 0) {
       this.callback(this.circuits[0]);
     } else {
-      console.log('Highest fitness: ' + this.circuits[0].fitness);
-
       for (let i = 0; i < this.circuits.length; i++) {
         if (i >= this.circuits.length - this.immigrantsPerGeneration) {
           this.circuits[i] = this.immigrantGenerator(this.circuitSize);
