@@ -5,8 +5,8 @@ To use, you'll need to:
 * `npm i`
 * `npm i http-server -g` (to use `npm start` for development)
 
-`npm start` kicks off the dev server and webpack in watch module
+`npm start` kicks off the dev server
 
-`npm run build` runs webpack as a one-off
+`npm run build` runs webpack
 
 Navigate to [localhost](http://localhost:9000/src/) to see the test page.

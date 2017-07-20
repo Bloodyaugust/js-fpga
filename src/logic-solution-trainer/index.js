@@ -30,6 +30,8 @@ class LogicSolutionTrainer {
       return c.fitness;
     }]);
 
+    console.log(this.circuits[0].fitness);
+
     if (this.circuits[0].fitness === 0) {
       this.callback(this.circuits[0]);
     } else {
