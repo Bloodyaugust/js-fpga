@@ -23,9 +23,18 @@ class LogicCircuit {
 
     for (let i = 0; i < gateGenomes.length; i++) {
       let genes = gateGenomes[i].split('.');
+      let gene1 = parseInt(genes[1]);
+      let gene2 = parseInt(genes[2]);
 
-      this.gates[i].sources[0] = !isNaN(parseInt(genes[1])) ? this.gates[parseInt(genes[1])] : null;
-      this.gates[i].sources[1] = !isNaN(parseInt(genes[2])) ? this.gates[parseInt(genes[2])] : null;
+      if (!isNaN(gene1)) {
+        this.gates[i].sources[0] = !isNaN(gene1) ? this.gates[gene1] : null;
+        this.gates[gene1].provides++;
+      }
+
+      if (!isNaN(gene2)) {
+        this.gates[i].sources[1] = !isNaN(gene2) ? this.gates[gene2] : null;
+        this.gates[gene2].provides++;
+      }
     }
   }
 

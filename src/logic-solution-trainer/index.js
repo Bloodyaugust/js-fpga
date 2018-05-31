@@ -4,21 +4,18 @@ import LogicCircuit from '../logic-circuit/';
 
 class LogicSolutionTrainer {
   constructor (config) {
-    this.callback = config.callback;
     this.circuitSize = config.circuitSize || 12;
     this.immigrantGenerator = config.immigrantGenerator;
     this.immigrantsPerGeneration = config.immigrantsPerGeneration;
     this.mutationRate = config.mutationRate || 0.01;
+    this.onEvaluated = config.onEvaluated || function () {};
+    this.onFinished = config.onFinished || function () {};
     this.population = config.population || 2;
 
     if (!this.immigrantGenerator) {
       this.immigrantGenerator = (circuitSize) => {
         return logicTools.seedCircuit(circuitSize);
       };
-    }
-
-    if (!this.callback) {
-      this.callback = () => {};
     }
   }
 
@@ -30,10 +27,8 @@ class LogicSolutionTrainer {
       return c.fitness;
     }]);
 
-    console.log(this.circuits[0].fitness);
-
     if (this.circuits[0].fitness === 0) {
-      this.callback(this.circuits[0]);
+      this.onFinished(this.circuits[0]);
     } else {
       for (let i = 0; i < this.circuits.length; i++) {
         if (i >= this.circuits.length - this.immigrantsPerGeneration) {
@@ -42,6 +37,8 @@ class LogicSolutionTrainer {
           this.circuits[i] = new LogicCircuit(logicTools.mutateGenome(this.circuits[i].genome));
         }
       }
+
+      this.onEvaluated(this.circuits);
 
       setTimeout(() => {
         this._evaluate();

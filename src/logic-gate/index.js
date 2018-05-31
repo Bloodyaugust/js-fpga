@@ -3,6 +3,7 @@ class LogicGate {
   constructor (config) {
     this.circuitIndex = config.circuitIndex;
     this.out = 0;
+    this.provides = 0;
     this.sources = [];
     this.type = config.type;
   }

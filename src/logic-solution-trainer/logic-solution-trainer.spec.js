@@ -13,7 +13,7 @@ describe('#LogicSolutionTrainer', function () {
   });
 
   it('Can properly evolve for a simple solution', function (done) {
-    testTrainer.callback = (winningCircuit) => {
+    testTrainer.onFinished = (winningCircuit) => {
       chai.expect(winningCircuit).to.not.equal(null);
       chai.expect(winningCircuit.gates[2].out).to.equal(0);
       chai.expect(winningCircuit.gates[3].out).to.equal(1);
