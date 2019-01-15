@@ -23,15 +23,16 @@
   },
   "dependencies": {
     "chai": "^3.5.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "babel-core": "^6.22.1",
-    "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-register": "^6.22.0",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-loader": "^8.0.5",
+    "babel-register": "^6.26.0",
     "extract-text-webpack-plugin": "^2.0.0-rc.2",
-    "mocha": "^3.2.0",
-    "webpack": "^2.2.1"
+    "mocha": "^5.2.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
   }
 }
